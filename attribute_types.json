@@ -1,0 +1,6 @@
+{
+    "Nominal": ["RefID", "Auction", "VehYear", "Make", "Model", "Trim", "SubModel", "Color", "Transmission", "WheelTypeID", "WheelType", "Nationality", "TopThreeAmericanName",  "PRIMEUNIT", "AUCGUART", "BYRNO", "VNZIP1", "VNST", "PurchDate"],
+    "Binary": ["IsBadBuy", "IsOnlineSale"],
+    "Numeric": ["VehicleAge", "VehOdo", "MMRAcquisitionAuctionAveragePrice", "MMRAcquisitionAuctionCleanPrice", "MMRAcquisitionRetailAveragePrice", "MMRAcquisitonRetailCleanPrice", "MMRCurrentAuctionAveragePrice", "MMRCurrentAuctionCleanPrice", "MMRCurrentRetailAveragePrice", "MMRCurrentRetailCleanPrice", "VehBCost", "WarrantyCost"],
+    "Ordinal": ["Size"]
+}
