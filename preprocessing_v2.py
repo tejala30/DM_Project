@@ -32,7 +32,7 @@ for key in attribute_types:
             training_data[column].fillna(median_value, inplace=True)
     
 for key in attribute_types:
-    if key == "Nominal" or key == "Binary"  or key == "Ordinal":
+    if key == "Nominal" or key == "Binary" or key == "Ordinal":
         for i in range(0, len(attribute_types[key])):
             column = attribute_types[key][i]
             if column != "RefId" and column != "IsBadBuy":
