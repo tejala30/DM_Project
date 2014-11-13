@@ -4,6 +4,10 @@ from scipy import stats
 from sklearn import preprocessing as pp
 from sklearn.naive_bayes import GaussianNB
 
+# Correlation analysis from step3(i.e preprocessing_v3 showed that MMRCurrentRetailCleanPrice, MMRCurrentAuctionCleanPrice,
+# 'MMRAcquisitionAuctionCleanPrice', 'MMRAcquisitonRetailCleanPrice' are highly correlated with their Average counterparts
+# Hence we remove those columns from the data set and do the prediction.
+
 attribute_types = {
     "Nominal": ["RefId", "Auction", "VehYear", "Make", "Model", "Trim", "SubModel", "Color", "Transmission", "WheelTypeID", "WheelType", "Nationality", "TopThreeAmericanName",  "PRIMEUNIT", "AUCGUART", "BYRNO", "VNZIP1", "VNST", "PurchDate"],
     "Binary": ["IsBadBuy", "IsOnlineSale"],
