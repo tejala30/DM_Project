@@ -4,11 +4,21 @@ from scipy import stats
 from sklearn import preprocessing as pp
 from sklearn.naive_bayes import GaussianNB
 
+#In this preprocessing step we have done correlation analysis of the Numeric attributes
+#  and in removed them in preprocessing step 5 ie (preprocessing_v5
+
+
+attribute_types = {
+    "Nominal": ["RefId", "Auction", "VehYear", "Make", "Model", "Trim", "SubModel", "Color", "Transmission", "WheelTypeID", "WheelType", "Nationality", "TopThreeAmericanName",  "PRIMEUNIT", "AUCGUART", "BYRNO", "VNZIP1", "VNST", "PurchDate"],
+    "Binary": ["IsBadBuy", "IsOnlineSale"],
+    "Numeric": ["VehicleAge", "VehOdo", "MMRAcquisitionAuctionAveragePrice", "MMRAcquisitionAuctionCleanPrice", "MMRAcquisitionRetailAveragePrice", "MMRAcquisitonRetailCleanPrice", "MMRCurrentAuctionAveragePrice", "MMRCurrentAuctionCleanPrice", "MMRCurrentRetailAveragePrice", "MMRCurrentRetailCleanPrice", "VehBCost", "WarrantyCost"],
+    "Ordinal": ["Size"]
+}
+
 
 def correlation(given_list):
     corr_dict = {}
     for col_name in given_list:
-    # new_num_list = [x for x in numeric_list if x != col_name]
         for col_name1 in given_list:
             col_list = []
             if col_name != col_name1:
@@ -18,18 +28,10 @@ def correlation(given_list):
                 col_list.append(str(col_name1))
                 col_list.sort()
                 key = col_list[0] + " " + col_list[1]
-                if s1.corr(s2) >= 0.9 and key not in corr_dict.keys():
+                if s1.corr(s2) >= 0.98 and key not in corr_dict.keys():
                     corr_dict[key] = s1.corr(s2)
 
     return corr_dict
-
-
-attribute_types = {
-    "Nominal": ["RefId", "Auction", "VehYear", "Make", "Model", "Trim", "SubModel", "Color", "Transmission", "WheelTypeID", "WheelType", "Nationality", "TopThreeAmericanName",  "PRIMEUNIT", "AUCGUART", "BYRNO", "VNZIP1", "VNST", "PurchDate"],
-    "Binary": ["IsBadBuy", "IsOnlineSale"],
-    "Numeric": ["VehicleAge", "VehOdo", "MMRAcquisitionAuctionAveragePrice", "MMRAcquisitionAuctionCleanPrice", "MMRAcquisitionRetailAveragePrice", "MMRAcquisitonRetailCleanPrice", "MMRCurrentAuctionAveragePrice", "MMRCurrentAuctionCleanPrice", "MMRCurrentRetailAveragePrice", "MMRCurrentRetailCleanPrice", "VehBCost", "WarrantyCost"],
-    "Ordinal": ["Size"]
-}
 
 training_data = pd.read_csv("training.csv")
 test_data = pd.read_csv("test.csv")
@@ -74,15 +76,22 @@ for key in attribute_types:
     elif key == "Nominal":
         nominal_list = attribute_types[key]
 
+remove_num = []
 print("Correlated Numeric Attributes")
 num_corr_dict = correlation(numeric_list)
 for k, v in num_corr_dict.items():
+    remove_num.append((k.split(" "))[1])
     print(str(k) + ": " + str(v))
 
+print(remove_num)
+remove_nom = []
 print("\n" + "Correlated Nominal Attributes")
 nom_corr_dict = correlation(nominal_list)
 for k, v in nom_corr_dict.items():
+    remove_nom.append((k.split(" "))[1])
     print(str(k) + ": " + str(v))
+
+print(remove_nom)
 
 training_columns = training_data.columns[(training_data.columns != 'RefId') & (training_data.columns != 'IsBadBuy')]
 test_columns = test_data.columns[test_data.columns != 'RefId']
